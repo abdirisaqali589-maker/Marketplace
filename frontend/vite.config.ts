@@ -1,28 +1,33 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    host: true,
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq, req) => {
-            // Preserve the original Content-Type header for multipart/form-data
-            if (req.headers['content-type']?.includes('multipart/form-data')) {
-              proxyReq.setHeader('Content-Type', req.headers['content-type']);
-            }
-          });
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const apiUrl = env.VITE_API_URL || '';
+
+  return {
+    plugins: [react()],
+    base: '/',
+    server: {
+      host: true,
+      port: 5173,
+      proxy: {
+        '/api': {
+          target: apiUrl || 'http://localhost:3000',
+          changeOrigin: true,
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq, req) => {
+              if (req.headers['content-type']?.includes('multipart/form-data')) {
+                proxyReq.setHeader('Content-Type', req.headers['content-type']);
+              }
+            });
+          },
+        },
+        '/uploads': {
+          target: apiUrl || 'http://localhost:3000',
+          changeOrigin: true,
         },
       },
-      '/uploads': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-      },
     },
-  },
+  };
 });
