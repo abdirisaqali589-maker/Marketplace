@@ -1,0 +1,435 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary-50: 255 247 237;
+    --color-primary-100: 255 237 213;
+    --color-primary-200: 254 215 170;
+    --color-primary-300: 253 186 116;
+    --color-primary-400: 251 146 60;
+    --color-primary-500: 249 115 22;
+    --color-primary-600: 234 88 12;
+    --color-primary-700: 194 65 12;
+    --color-primary-800: 154 52 18;
+    --color-primary-900: 124 45 18;
+    --color-accent-50: 240 253 244;
+    --color-accent-100: 220 252 231;
+    --color-accent-200: 187 247 208;
+    --color-accent-300: 134 239 172;
+    --color-accent-400: 74 222 128;
+    --color-accent-500: 34 197 94;
+    --color-accent-600: 22 163 74;
+    --color-accent-700: 21 128 61;
+    --color-accent-800: 22 101 52;
+    --color-accent-900: 20 83 45;
+
+    /* Gray scale as CSS variables */
+    --color-gray-50: 249 250 251;
+    --color-gray-100: 243 244 246;
+    --color-gray-200: 229 231 235;
+    --color-gray-300: 209 213 219;
+    --color-gray-400: 156 163 175;
+    --color-gray-500: 107 114 128;
+    --color-gray-600: 75 85 99;
+    --color-gray-700: 55 65 81;
+    --color-gray-800: 31 41 55;
+    --color-gray-900: 17 24 39;
+    --color-gray-950: 3 7 18;
+
+    /* White and black */
+    --color-white: 255 255 255;
+    --color-black: 0 0 0;
+
+    --color-primary: var(--color-primary-600);
+    --color-primary-dark: var(--color-primary-700);
+    --color-secondary: 107 114 128;
+    --color-accent: var(--color-accent-600);
+    --color-danger: 220 38 38;
+    --color-warning: 234 179 8;
+
+    /* === SEMANTIC COLOR TOKENS === */
+    --color-surface: var(--color-white);
+    --color-surface-muted: var(--color-gray-50);
+    --color-surface-hover: var(--color-gray-100);
+    --color-surface-active: var(--color-gray-200);
+    --color-text: var(--color-gray-900);
+    --color-text-secondary: var(--color-gray-700);
+    --color-text-muted: var(--color-gray-500);
+    --color-text-disabled: var(--color-gray-400);
+    --color-border: var(--color-gray-200);
+    --color-border-hover: var(--color-gray-300);
+    --color-border-strong: var(--color-gray-400);
+    --color-divider: var(--color-gray-100);
+  }
+
+  /*
+   * Global dark mode CSS variable inversion.
+   * All gray shades, white, and black are swapped so that
+   * rgb(var(--color-gray-*)) usages invert automatically.
+   */
+  .dark {
+    --color-gray-50: 3 7 18;
+    --color-gray-100: 17 24 39;
+    --color-gray-200: 31 41 55;
+    --color-gray-300: 55 65 81;
+    --color-gray-400: 75 85 99;
+    --color-gray-500: 107 114 128;
+    --color-gray-600: 156 163 175;
+    --color-gray-700: 209 213 219;
+    --color-gray-800: 229 231 235;
+    --color-gray-900: 243 244 246;
+    --color-gray-950: 249 250 251;
+    --color-white: 3 7 18;
+    --color-black: 255 255 255;
+    --color-primary: var(--color-primary-400);
+
+    /* Semantic tokens invert automatically via variable references */
+    --color-surface: var(--color-white);
+    --color-surface-muted: var(--color-gray-50);
+    --color-surface-hover: var(--color-gray-100);
+    --color-surface-active: var(--color-gray-200);
+    --color-text: var(--color-gray-900);
+    --color-text-secondary: var(--color-gray-700);
+    --color-text-muted: var(--color-gray-500);
+    --color-text-disabled: var(--color-gray-400);
+    --color-border: var(--color-gray-200);
+    --color-border-hover: var(--color-gray-300);
+    --color-border-strong: var(--color-gray-400);
+    --color-divider: var(--color-gray-100);
+  }
+
+  /*
+   * Smooth theme transitions on the document root.
+   * We use * to catch all elements but exclude certain properties.
+   */
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition: background-color 0.35s ease,
+                color 0.35s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease !important;
+  }
+
+  body {
+    background-color: rgb(var(--color-gray-50));
+    color: rgb(var(--color-gray-900));
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* === ACCESSIBILITY MODE === */
+  .accessibility-on {
+    font-size: 112.5%;
+  }
+  .accessibility-on *:focus-visible {
+    outline: 3px solid rgb(var(--color-primary-600));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .accessibility-on body {
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+  .accessibility-on.high-contrast {
+    --color-gray-50: 255 255 255;
+    --color-gray-100: 255 255 255;
+    --color-gray-200: 243 244 246;
+    --color-gray-300: 229 231 235;
+    --color-gray-400: 156 163 175;
+    --color-gray-500: 107 114 128;
+    --color-gray-600: 55 65 81;
+    --color-gray-700: 31 41 55;
+    --color-gray-800: 17 24 39;
+    --color-gray-900: 0 0 0;
+    --color-gray-950: 0 0 0;
+  }
+  .accessibility-on.high-contrast.dark {
+    --color-gray-50: 0 0 0;
+    --color-gray-100: 0 0 0;
+    --color-gray-200: 17 24 39;
+    --color-gray-300: 31 41 55;
+    --color-gray-400: 55 65 81;
+    --color-gray-500: 107 114 128;
+    --color-gray-600: 156 163 175;
+    --color-gray-700: 209 213 219;
+    --color-gray-800: 229 231 235;
+    --color-gray-900: 243 244 246;
+    --color-gray-950: 255 255 255;
+  }
+
+  /* Reduced motion for vestibular disorders */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Skip-to-content link */
+  .skip-to-content {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .skip-to-content:focus {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    padding: 1rem;
+    background: rgb(var(--color-primary-600));
+    color: white;
+    z-index: 99999;
+    font-size: 1rem;
+    clip: auto;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn:focus-visible {
+    @apply ring-2 ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn text-white shadow-sm hover:shadow-md;
+    background-color: rgb(var(--color-primary-600));
+  }
+  .btn-primary:hover {
+    background-color: rgb(var(--color-primary-700));
+  }
+  .btn-primary:focus-visible {
+    @apply ring-primary-500;
+    --tw-ring-color: rgb(var(--color-primary-500));
+  }
+  .btn-secondary {
+    @apply btn shadow-sm;
+    background-color: rgb(var(--color-white));
+    color: rgb(var(--color-gray-700));
+    border: 1px solid rgb(var(--color-border));
+  }
+  .btn-secondary:hover {
+    background-color: rgb(var(--color-surface-hover));
+  }
+  .btn-secondary:focus-visible {
+    --tw-ring-color: rgb(var(--color-primary-500));
+  }
+  .btn-outline {
+    @apply btn bg-transparent;
+    color: rgb(var(--color-primary-600));
+    border: 1px solid rgb(var(--color-primary-600));
+  }
+  .btn-outline:hover {
+    background-color: rgb(var(--color-primary-50));
+  }
+  .btn-danger {
+    @apply btn text-white shadow-sm hover:shadow-md;
+    background-color: rgb(var(--color-danger));
+  }
+  .btn-danger:hover {
+    background-color: rgb(185 28 28);
+  }
+  .btn-danger:focus-visible {
+    --tw-ring-color: rgb(var(--color-danger));
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  .card {
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border));
+    @apply rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  .card-hover {
+    @apply card cursor-pointer;
+  }
+  .card-hover:hover {
+    border-color: rgb(var(--color-primary-200));
+    @apply shadow-lg;
+  }
+
+  .input-field {
+    @apply block w-full rounded-lg px-3 py-2.5 text-sm transition-colors;
+    background-color: rgb(var(--color-surface));
+    color: rgb(var(--color-text));
+    border: 1px solid rgb(var(--color-border-strong));
+  }
+  .input-field::placeholder {
+    color: rgb(var(--color-text-disabled));
+  }
+  .input-field:focus {
+    border-color: rgb(var(--color-primary-500));
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-primary-500) / 0.2);
+  }
+  .input-error {
+    border-color: rgb(var(--color-danger));
+  }
+  .input-error:focus {
+    border-color: rgb(var(--color-danger));
+    box-shadow: 0 0 0 2px rgb(var(--color-danger) / 0.2);
+  }
+  .select-field {
+    @apply input-field appearance-none;
+  }
+  .textarea-field {
+    @apply input-field min-h-[100px] resize-y;
+  }
+  
+  /* Global form styles for consistency */
+  .form-label {
+    @apply mb-1 block text-sm font-medium;
+    color: rgb(var(--color-text-secondary));
+  }
+  .form-input {
+    @apply block w-full rounded-lg px-3 py-2.5 text-sm transition-colors;
+    background-color: rgb(var(--color-surface));
+    color: rgb(var(--color-text));
+    border: 1px solid rgb(var(--color-border-strong));
+  }
+  .form-input::placeholder {
+    color: rgb(var(--color-text-disabled));
+  }
+  .form-input:focus {
+    @apply border-primary-500;
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(var(--color-primary-500) / 0.2);
+  }
+  .form-textarea {
+    @apply form-input min-h-[100px] resize-y;
+  }
+  .form-select {
+    @apply form-input appearance-none;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-success {
+    @apply badge;
+    background-color: rgb(220 252 231);
+    color: rgb(22 101 52);
+  }
+  .dark .badge-success {
+    background-color: rgb(22 101 52 / 0.4);
+    color: rgb(134 239 172);
+  }
+  .badge-warning {
+    @apply badge;
+    background-color: rgb(254 243 199);
+    color: rgb(133 77 14);
+  }
+  .dark .badge-warning {
+    background-color: rgb(133 77 14 / 0.4);
+    color: rgb(253 230 138);
+  }
+  .badge-error {
+    @apply badge;
+    background-color: rgb(254 226 226);
+    color: rgb(153 27 27);
+  }
+  .dark .badge-error {
+    background-color: rgb(153 27 27 / 0.4);
+    color: rgb(252 165 165);
+  }
+  .badge-info {
+    @apply badge;
+    background-color: rgb(219 234 254);
+    color: rgb(30 64 175);
+  }
+  .dark .badge-info {
+    background-color: rgb(30 64 175 / 0.4);
+    color: rgb(147 197 253);
+  }
+  .badge-neutral {
+    background-color: rgb(var(--color-surface-hover));
+    color: rgb(var(--color-text-secondary));
+  }
+
+  .skeleton {
+    @apply animate-pulse rounded;
+    background-color: rgb(var(--color-surface-active));
+  }
+
+  .section-title {
+    @apply text-2xl font-bold mb-6;
+    color: rgb(var(--color-text));
+  }
+
+  .page-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .dark .scrollbar-thin {
+    scrollbar-color: #374151 transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-gray-300));
+  }
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-gray-600));
+  }
+
+  .high-contrast-mode {
+    filter: contrast(1.1);
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
